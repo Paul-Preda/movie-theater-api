@@ -1,8 +1,10 @@
-let app = require("./app")
-let db = require("./db/connection")
-let port = 3000;
+let { app } = require("./app")
+let { db } = require("./db/connection")
+let seed = require("./seed")
+let port = 3000
 
-app.listen(port, () => {
-    db.sync()
-    console.log(`App listening on port http://localhost:${port}/movie-theater-api`)
-})
+app.listen(port, async () => {
+    await db.sync()
+    await seed()
+    console.log(`App listening at http://localhost:${port}/`);
+});
