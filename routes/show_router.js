@@ -47,7 +47,7 @@ show_router.put("/:id/status", async (req, res) => {
 show_router.delete("/:id", async (req, res) => {
   let id = req.params.id;
   await Show.destroy({ where: { id: id } });
-  res.json({ message: `Show with ID ${id} deleted` });
+  res.json({ message: `Show ${id} deleted` });
 });
 
 module.exports = show_router;

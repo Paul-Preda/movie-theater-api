@@ -20,17 +20,19 @@ user_router.get("/:id", async (req, res) => {
 // GET all shows watched by a user
 user_router.get("/:id/shows", async (req, res) => {
   let id = req.params.id;
-  let user = await User.findByPk(id, { include: [{ model: Show }] });
+  let user = await User.findByPk(id, { include: Show });
   res.json(user.shows);
 });
 
 // PUT update and add a show if a user has watched it
-user_router.put("/:id/shows", async (req, res) => {
-  let id = req.params.id;
-  let user = await User.findByPk(id);
-  let show = await Show.findByPk(req.body.showId);
-  await user.addShow(show, { through: { rating: req.body.rating, status: req.body.status } });
-  res.json(user);
-});
+user_router.put("/:id/shows/:showId", async (req, res) => {
+    let { id, showId } = req.params;
+    let user = await User.findByPk(id);
+    let show = await Show.findByPk(showId)
+    console.log(user)
+    console.log(show)
+    await user.addShow(show)
+    res.json(user)
+  });
 
 module.exports = user_router;
