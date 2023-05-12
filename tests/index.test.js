@@ -44,6 +44,13 @@ describe('./users endpoint', () => {
         expect(body).toMatchObject(usershows); //request should equal first user
     })
 
+    it("can update show to watched for user by id", async () => {
+        let user = await User.findByPk(1); //get first user in seed
+        await request(app).put("/users/1/shows/1"); //request first user
+        let usershows = user.getShows()[0];
+        expect(usershows).toMatchObject({status: "watched"}); //request should equal first user
+    })
+
 
     
 })
@@ -176,6 +183,26 @@ describe('./shows endpoint', () => {
             "rating": 1,
             "status": "on-going"
           }]); 
+    })
+
+    it("can update rating show by id", async () => {
+        let show = await Show.findByPk(1); 
+        await request(app).put("/shows/1/watched"); 
+        let { body } = await request(app).get("/shows/1");
+        expect(body).toMatchObject({
+            "status": "watched"
+          }); //request should equal first show
+    })
+
+    it("can delete show by id", async () => {
+        let deletedshow = await Show.destroy({where :{id : 1}});  
+        let { body } = await request(app).get("/shows/1");
+        expect(body).toMatchObject({
+            "title": "X-Files",
+            "genre": "Sitcom",
+            "rating": 0,
+            "status": "on-going"
+          }); //request should equal first show
     })
 
 
