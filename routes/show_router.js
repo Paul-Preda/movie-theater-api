@@ -17,7 +17,7 @@ show_router.get("/:id", async (req, res) => {
 });
 
 // GET shows of a specified genre
-show_router.get("/genre/:genre", async (req, res) => {
+show_router.get("/genres/:genre", async (req, res) => {
   let genre = req.params.genre;
   let shows = await Show.findAll({ where: { genre: genre } });
   res.json(shows);
