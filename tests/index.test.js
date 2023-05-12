@@ -36,6 +36,13 @@ describe('./users endpoint', () => {
         let { body } = await request(app).get("/users/1"); //request first user 
         expect(body).toMatchObject({id : 1, username: "testUser@gmail.com"}); //request should equal first user
     })
+    
+    it("can get list of shows for user by id", async () => {
+        let user = await User.findByPk(1); //get first user in seed
+        let { body } = await request(app).get("/users/1/shows"); //request first user
+        let usershows = user.getShows();
+        expect(body).toMatchObject(usershows); //request should equal first user
+    })
 
 
     
@@ -142,6 +149,33 @@ describe('./shows endpoint', () => {
             "rating": 5,
             "status": "on-going"
           }); //request should equal first show
+    })
+
+    it("can get show by genre", async () => {
+        let show = await Show.findAll({where : {genre : "Comedy"}}); 
+        let { body } = await request(app).get("/shows/genres/Comedy"); 
+        expect(body).toMatchObject([{
+            "title": "The Office",
+            "genre": "Comedy",
+            "rating": 1,
+            "status": "on-going"
+          }, {
+            "title": "House",
+            "genre": "Comedy",
+            "rating": 0,
+            "status": "on-going"
+          },{
+            "title": "Squid Games",
+            "genre": "Comedy",
+            "rating": 0,
+            "status": "on-going"
+          },
+          {
+            "title": "Avatar",
+            "genre": "Comedy",
+            "rating": 1,
+            "status": "on-going"
+          }]); 
     })
 
 
