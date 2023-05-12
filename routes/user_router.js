@@ -1,4 +1,5 @@
 let User = require("../models/User")
+let Show = require("../models/Show")
 let { Router } = require("express")
 let user_router = Router()
 
