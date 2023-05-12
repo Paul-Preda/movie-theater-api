@@ -43,11 +43,21 @@ show_router.put("/:id/status", async (req, res) => {
   res.json(show);
 });
 
+// PUT update the watched status of a show
+show_router.put("/:id/watched", async (req, res) => {
+  let id = req.params.id;
+  let watched = req.body.watched;
+  let show = await Show.findByPk(id);
+  show.watched = watched;
+  await show.save();
+  res.json(show);
+});
+
 // DELETE a show
 show_router.delete("/:id", async (req, res) => {
   let id = req.params.id;
   await Show.destroy({ where: { id: id } });
-  res.json({ message: `Show with ID ${id} deleted` });
+  res.json({ message: `Show ${id} deleted` });
 });
 
 module.exports = show_router;

@@ -30,7 +30,7 @@ describe('./users endpoint', () => {
         let userdata = JSON.stringify(users)
         let info = await request(app).get("/users");
         //let data = JSON.stringify(info.text);
-        expect(users).toEqual([{"id":1,"username":"testUser@gmail.com","password":"ThisIsA","createdAt":"2023-05-12T13:38:25.639Z","updatedAt":"2023-05-12T13:38:25.639Z"},
+        expect(users).toEqual([{"id":1,"username":"testUser@gmail.com","password":"ThisIsA","createdAt": "2023-05-12T13:38:25.639Z","updatedAt":"2023-05-12T13:38:25.639Z"},
         {"id":2,"username":"someone@gmail.com","password":"asdfsAS2@1","createdAt":"2023-05-12T13:38:25.640Z","updatedAt":"2023-05-12T13:38:25.640Z"}]);
 
     })
@@ -38,7 +38,7 @@ describe('./users endpoint', () => {
     it("can get user by id", async (req, res) => {
         let user = await User.findAll({where :{username: "testUser@gmail.com"}}); //get first user in seed
         let response = await request(app).get(`/users/1`); //request first user 
-        expect(response).toEqual({}); //request should equal first user
+        expect(response).toEqual(user); //request should equal first user
     })
 
 
